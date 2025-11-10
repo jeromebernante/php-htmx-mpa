@@ -1,0 +1,29 @@
+npx @tailwindcss/cli -i ./public/css/tailwind-source.css -o ./public/css/tailwind-output.css --watch
+php -S localhost:8000 -t public/
+
+
+Step 8: Routing and Logout
+Expand public/index.php to handle all paths:
+
+Add cases for /user/dashboard, /user/deposit, etc., rendering the views.
+For actions like /user/action (POST), include UserController.
+Similarly for admin.
+Logout: case '/logout': session_destroy(); header('Location: /login');
+
+Step 9: Security and Enhancements
+
+Add CSRF: Generate token in forms, verify in controllers.
+Validation: Use filter_var for inputs.
+Error handling: Use try-catch in controllers.
+HTMX: Use for real-time updates, e.g., hx-get to refresh balance after actions.
+Testing: Create an admin user manually in DB (set role='admin').
+Deployment: Use a server with HTTPS; consider Docker for production.
+
+Step 10: Running the App
+
+Start PHP server: php -S localhost:8000 -t public/
+Visit http://localhost:8000/register
+Test flows: Register user, login, deposit (watch balance update via HTMX), transfer, etc.
+For admin: Login as admin, manage users.
+
+This is a basic, maintainable app. Expand with more features like pagination, logs, or better error UI. If you need code adjustments or additions, let me know!
