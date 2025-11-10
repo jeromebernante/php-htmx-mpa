@@ -23,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $password = $_POST['password'];
                 $user = $userModel->login($username, $password);
                 if ($user) {
-                    session_start();
                     $_SESSION['user_id'] = $user['id'];
                     $_SESSION['role'] = $user['role'];
                     if ($user['role'] === 'admin') {
@@ -31,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     } else {
                         header('Location: /user/dashboard');
                     }
+                    exit();
                 } else {
                     echo "Invalid credentials.";
                 }

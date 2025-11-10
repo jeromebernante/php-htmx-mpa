@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../middleware/auth.php';
 require_once __DIR__ . '/../controllers/AuthController.php';
 require_once __DIR__ . '/../controllers/UserController.php';
 require_once __DIR__ . '/../controllers/AdminController.php';
@@ -16,11 +17,57 @@ function renderView($view, $layout = 'main') {
     include __DIR__ . '/../views/layouts/' . $layout . '.php';
 }
 
-switch ($path) {
-    case '/':
-    case '':
+// Define route groups
+$publicRoutes = ['/login', '/register', '/auth/login', '/auth/register'];
+$userRoutes = ['/user/dashboard', '/user/deposit', '/user/withdraw', '/user/transfer'];
+$adminRoutes = ['/admin/dashboard', '/admin/users', '/admin/manage-user'];
+
+// Check if current path is in a route group
+$isPublicRoute = in_array($path, $publicRoutes);
+$isUserRoute = in_array($path, $userRoutes);
+$isAdminRoute = in_array($path, $adminRoutes);
+
+// Handle root path
+if ($path === '/' || $path === '') {
+    if (isset($_SESSION['user_id'])) {
+        $role = $_SESSION['role'] ?? 'user';
+        header('Location: ' . ($role === 'admin' ? '/admin/dashboard' : '/user/dashboard'));
+    } else {
         header('Location: /login');
-        break;
+    }
+    exit();
+}
+
+// Route protection logic
+if ($isPublicRoute) {
+    // Redirect logged-in users away from public routes
+    if (isset($_SESSION['user_id'])) {
+        $role = $_SESSION['role'] ?? 'user';
+        header('Location: ' . ($role === 'admin' ? '/admin/dashboard' : '/user/dashboard'));
+        exit();
+    }
+} elseif ($isUserRoute || $isAdminRoute) {
+    // Ensure user is logged in
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: /login');
+        exit();
+    }
+    
+    // Check admin access
+    if ($isAdminRoute && $_SESSION['role'] !== 'admin') {
+        header('Location: /user/dashboard');
+        exit();
+    }
+    
+    // Check user access
+    if ($isUserRoute && $_SESSION['role'] !== 'user') {
+        header('Location: /admin/dashboard');
+        exit();
+    }
+}
+
+// Route handling
+switch ($path) {
     case '/register':
         renderView('auth/register');
         break;
@@ -29,7 +76,7 @@ switch ($path) {
         break;
     case '/auth/register':
     case '/auth/login':
-        include __DIR__ . '/../controllers/AuthController.php';  // Handles POST
+        require __DIR__ . '/../controllers/AuthController.php';
         break;
     case '/user/dashboard':
         renderView('user/dashboard');
@@ -55,6 +102,7 @@ switch ($path) {
     case '/logout':
         session_destroy();
         header('Location: /login');
+        exit();
         break;
     default:
         http_response_code(404);

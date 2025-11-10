@@ -1,14 +1,16 @@
 <?php
+// Database configuration constants
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'ewallet_db');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+
 function getDbConnection() {
-    $host = 'localhost';
-    $db = 'ewallet_db';
-    $user = 'root';
-    $pass = '';
     try {
-        $pdo = new PDO("mysql:host=$host:dbname=$db", $user, $pass);
+        $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $pdo;
     } catch (PDOException $e) {
-        die("Connection  failed " . $e->getMessage());
+        die("Connection failed: " . $e->getMessage());
     }
 }

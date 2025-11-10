@@ -7,9 +7,15 @@ $pdo = getDbConnection();
 $userModel = new User($pdo);
 $transactionModel = new Transaction($pdo);
 
-session_start();
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+require_once __DIR__ . '/../middleware/auth.php';
+
+if (!isLoggedIn()) {
     header('Location: /login');
+    exit;
+}
+
+if (!isAdmin()) {
+    header('Location: /user/dashboard');
     exit;
 }
 
