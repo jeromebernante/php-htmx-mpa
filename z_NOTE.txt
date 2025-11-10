@@ -1,8 +1,15 @@
 # create .htaccess
 
 npm install tailwindcss @tailwindcss/cli
-# check this https://tailwindcss.com/docs/installation/tailwind-cli
+Use daisyUI with HTMX
+
+# check this https://tailwindcss.com/docs/installation/tailwind-c
+# https://daisyui.com/docs/install/htmx/
+
 # create public/css/input.css & public/css/output.css
+
+
 npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/output.css --watch
+
 
 php -S localhost:8000 -t public/

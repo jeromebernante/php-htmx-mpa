@@ -7,35 +7,36 @@ require_once __DIR__ . '/../functions/environment.php';
 require_once __DIR__ . '/../functions/database.php';
 
 // --- Functions ---
-function renderPage(string $view, array $data = []): void
+function renderPage(string $view_dir, array $data = []): void
 {
     extract($data);
     ob_start();
-    require __DIR__ . '/../views/' . $view . '.php';
-    $content = ob_get_clean();
+    require __DIR__ . '/../views/' . $view_dir . '.php';
+    $view = ob_get_clean();
     $title   = $data['title'] ?? 'E-Wallet';
     require __DIR__ . '/../views/layout.php';
 }
 
 // use this if using htmx
-function renderSection(string $view, array $data = []): void
+function renderSection(string $view_dir, array $data = []): void
 {
     extract($data);
-    require __DIR__ . '/../views/' . $view . '.php';
+    require __DIR__ . '/../views/' . $view_dir . '.php';
 }
 // use this if using htmx
-function renderComponent(string $view, array $data = []): void
+function renderComponent(string $view_dir, array $data = []): void
 {
     extract($data);
-    require __DIR__ . '/../views/' . $view . '.php';
+    require __DIR__ . '/../views/' . $view_dir . '.php';
 }
 
 
 // --- Routes ---
 $routes = [
-    '/'         => ['page' => 'public/home-page', 'title' => 'Home'],
-    '/home'     => ['page' => 'public/home-page', 'title' => 'Home'],
-    '/features' => ['section' => 'public/sections/features'],
+    '/'         => ['page'      => 'public/home-page', 'title' => 'Home'],
+    '/home'     => ['page'      => 'public/home-page', 'title' => 'Home'],
+    '/features' => ['section'   => 'public/sections/features'],
+    '/users'    => ['section'   => 'public/sections/users'],
 ];
 
 // --- Router ---
@@ -55,5 +56,10 @@ if (isset($route['page'])) {
 
 if (isset($route['section'])) {
     renderSection($route['section']);
+    exit;
+}
+
+if (isset($route['component'])) {
+    renderComponent($route['component']);
     exit;
 }
