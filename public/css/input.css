@@ -1,2 +1,14 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+@theme myeWalletTheme {
+  --color-primary: #16a34a;     /* 💙 Use for primary buttons, links, and brand color */
+  --color-secondary: #16a34a;   /* 💚 Use for secondary buttons or confirm actions */
+  --color-accent: #f59e0b;      /* 💛 Use for highlights, icons, or small accents */
+  --color-neutral: #1e293b;     /* 🩶 Use for text or dark mode backgrounds */
+  --color-base-100: #f9fafb;    /* ⚪ Use for main background areas */
+  --color-info: #3b82f6;        /* 🔵 Use for informational alerts or tooltips */
+  --color-success: #22c55e;     /* ✅ Use for success messages or deposit confirmation */
+  --color-warning: #facc15;     /* ⚠️ Use for warnings (e.g., low balance) */
+  --color-error: #ef4444;       /* ❌ Use for error states (e.g., failed transaction) */
+}

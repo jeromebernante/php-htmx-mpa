@@ -8,6 +8,7 @@
     <script src="/js/htmx.min.js"></script>
     <link rel="stylesheet" href="/css/output.css">
 </head>
+
 <body class="bg-neutral-100 min-h-screen">
     <?= $view ?>
 </body>

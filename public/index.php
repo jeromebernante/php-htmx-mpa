@@ -6,7 +6,7 @@ session_start();
 require_once __DIR__ . '/../functions/environment.php';
 require_once __DIR__ . '/../functions/database.php';
 
-// --- Functions ---
+
 function renderPage(string $view_dir, array $data = []): void
 {
     extract($data);
@@ -17,26 +17,17 @@ function renderPage(string $view_dir, array $data = []): void
     require __DIR__ . '/../views/layout.php';
 }
 
-// use this if using htmx
-function renderSection(string $view_dir, array $data = []): void
+function renderHTMX(string $view_dir): void
 {
-    extract($data);
     require __DIR__ . '/../views/' . $view_dir . '.php';
 }
-// use this if using htmx
-function renderComponent(string $view_dir, array $data = []): void
-{
-    extract($data);
-    require __DIR__ . '/../views/' . $view_dir . '.php';
-}
-
 
 // --- Routes ---
 $routes = [
-    '/'         => ['page'      => 'public/home-page', 'title' => 'Home'],
-    '/home'     => ['page'      => 'public/home-page', 'title' => 'Home'],
-    '/features' => ['section'   => 'public/sections/features'],
-    '/users'    => ['section'   => 'public/sections/users'],
+    '/'         => ['page' => 'public/home-page', 'title' => 'Home'],
+    '/home'     => ['page' => 'public/home-page', 'title' => 'Home'],
+    '/features' => ['htmx' => 'public/sections/features'],
+    '/users'    => ['htmx' => 'public/sections/users'],
 ];
 
 // --- Router ---
@@ -54,12 +45,7 @@ if (isset($route['page'])) {
     exit;
 }
 
-if (isset($route['section'])) {
-    renderSection($route['section']);
-    exit;
-}
-
-if (isset($route['component'])) {
-    renderComponent($route['component']);
+if (isset($route['htmx'])) {
+    renderHTMX($route['htmx']);
     exit;
 }

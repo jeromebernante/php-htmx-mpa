@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "build:css": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/output.css --watch"
+    "build:css": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/output.css --watch",
+    "server": "php -S localhost:8000 -t public/",
+    "local-server": "php -S 192.168.1.25:8000 -t public/"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.17",
