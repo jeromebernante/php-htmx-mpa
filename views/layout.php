@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="/css/output.css">
 </head>
 
-<body class="bg-neutral-100 min-h-screen">
+  <body class="bg-base-100 text-base-content min-h-screen">
     <?= $view ?>
-</body>
+  </body>
 
 </html>
