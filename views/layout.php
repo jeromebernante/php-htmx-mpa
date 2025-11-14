@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/css/output.css">
 </head>
 
-  <body class="bg-base-100 text-base-content min-h-screen">
+  <body class="bg-neutral-200 text-gray-800 min-h-screen">
     <?= $view ?>
   </body>
 
