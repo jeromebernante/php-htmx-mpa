@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- data-theme="light" -->
 <html lang="en" data-theme="light">
 
 <head>
@@ -9,7 +10,7 @@
     <link rel="stylesheet" href="/css/output.css">
 </head>
 
-  <body class="bg-neutral-200 text-gray-800 min-h-screen">
+  <body class="bg-base-200 text-base-content min-h-screen">
     <?= $view ?>
   </body>
 

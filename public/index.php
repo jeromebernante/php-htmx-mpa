@@ -26,8 +26,10 @@ function renderHTMX(string $view_dir): void
 $routes = [
     '/'         => ['page' => 'public/home-page', 'title' => 'Home'],
     '/home'     => ['page' => 'public/home-page', 'title' => 'Home'],
+    '/login'     => ['page' => 'public/login-page', 'title' => 'Login'],
     '/features' => ['htmx' => 'public/sections/features'],
     '/users'    => ['htmx' => 'public/sections/users'],
+    '/auth-login'    => ['htmx' => 'public/actions/auth-login'],
 ];
 
 // --- Router ---
